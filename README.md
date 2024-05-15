@@ -1,1 +1,3 @@
-[PharmaDuel](https://hikarimusic.github.io/pharmaduel/)
+# PharmaDuel
+
+Dueling club for pharmacology 
