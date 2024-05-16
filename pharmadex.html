@@ -62,7 +62,7 @@
     <div class="info" id="drugInfo"></div>
 </div>
 
-<script src="drugs_jp.js"></script>
+<script src="drugs_us.js"></script>
 <script>
     let filteredDrugs = drugs;
 
@@ -106,6 +106,8 @@
     }
 
     function showRandomDrug() {
+        document.getElementById('mainCategorySelect').blur();
+        document.getElementById('subCategorySelect').blur();
         if (filteredDrugs.length === 0) {
             document.getElementById('drugName').textContent = "No drugs available";
             document.getElementById('drugInfo').textContent = "";

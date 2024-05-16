@@ -74,7 +74,7 @@
     <div class="info" id="gameStatus">Press keys to answer when a drug shows up.</div>
 </div>
 
-<script src="drugs_jp.js"></script>
+<script src="drugs_us.js"></script>
 <script>
     let filteredDrugs = [];
     let currentDrugIndex = 0;
@@ -131,6 +131,8 @@
     }
 
     function setupGame() {
+        document.getElementById('mainCategorySelect').blur();
+        document.getElementById('subCategorySelect').blur();
         if (filteredDrugs.length === 0) {
             document.getElementById('drugName').textContent = "No drugs available";
             document.getElementById('gameStatus').textContent = "No drugs available in this category.";
@@ -146,19 +148,28 @@
         if (currentDrugIndex >= filteredDrugs.length) currentDrugIndex = 0;
         const drug = filteredDrugs[currentDrugIndex++];
         document.getElementById('drugName').textContent = drug[2];
-        displayOptions(drug[1]);
+        displayOptions(drug[0], drug[1]);
     }
 
-    function displayOptions(correctAnswer) {
+    function displayOptions(mainCategory, correctAnswer) {
         const optionsContainer = document.getElementById('optionButtons');
         optionsContainer.innerHTML = '';
+        let sameCategoryOptions = drugs.filter(drug => drug[0] === mainCategory).map(drug => drug[1]);
+        sameCategoryOptions = sameCategoryOptions.filter(option => option !== correctAnswer);
+        sameCategoryOptions.sort(() => 0.5 - Math.random());
         let options = new Set([correctAnswer]);
+        for (let option of sameCategoryOptions) {
+            if (options.size < 10) {
+                options.add(option);
+            } else {
+                break;
+            }
+        }
         while (options.size < 10) {
             let randomOption = drugs[Math.floor(Math.random() * drugs.length)][1];
             options.add(randomOption);
         }
-        let shuffledOptions = Array.from(options);
-        shuffledOptions.sort(() => 0.5 - Math.random());
+        let shuffledOptions = fisherYatesShuffle(Array.from(options));
         let layout = [3, 4, 3];
         layout.forEach((count, row) => {
             const rowDiv = document.createElement('div');
@@ -171,6 +182,14 @@
             }
             optionsContainer.appendChild(rowDiv);
         });
+    }
+
+    function fisherYatesShuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
     }
 
     function processAnswer(key, player) {
@@ -193,8 +212,9 @@
                     // btn.classList.add('correct'); // Highlight correct button
                 }
             });
-            if (playerScores[player] >= 20) {
+            if (playerScores[player] >= 21) {
                 document.getElementById('gameStatus').textContent = `${player} wins the game!`;
+                activePlayer = "none";
                 return;
             }
             activePlayer = player === 'player1' ? 'player2' : 'player1';
