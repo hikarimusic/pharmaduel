@@ -384,7 +384,7 @@ const drugs = [
     ["Insomnia", "Psychostimulants", "Pemoline"],
     ["Insomnia", "Tricyclic antidepressants", "Clomipramine"],
     ["Insomnia", "Selective serotonin reuptake inhibitors (SSRI)", "Paroxetine"],
-    ["Insomnia", "Selective serotonin reuptake inhibitors (SSRI)", "Milnacipran"],
+    ["Insomnia", "Serotonin-noradrenaline reuptake inhibitors (SNRI)", "Milnacipran"],
     ["Insomnia", "Melatonin receptor agonists", "Ramelteon"],
     ["Insomnia", "Melatonin receptor agonists", "Melatonin"],
     ["Insomnia", "Orexin receptor antagonists", "Suvorexant"],
